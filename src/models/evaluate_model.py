@@ -5,9 +5,9 @@ from joblib import load
 from sklearn.metrics import mean_squared_error, r2_score
 
 def main():
-    input_dir = "./data/processed"
-    model_dir = "./models"
-    metrics_dir = "./metrics"
+    input_dir = os.path.join(os.path.dirname(__file__), '../../data/processed')
+    model_dir = os.path.join(os.path.dirname(__file__), '../../models')
+    metrics_dir = os.path.join(os.path.dirname(__file__), '../../metrics')
     os.makedirs(metrics_dir, exist_ok=True)
 
     # Load data

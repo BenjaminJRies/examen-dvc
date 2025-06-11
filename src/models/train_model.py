@@ -5,8 +5,8 @@ from joblib import dump
 from sklearn.ensemble import RandomForestRegressor
 
 def main():
-    input_dir = "./data/processed"
-    model_dir = "./models"
+    input_dir = os.path.join(os.path.dirname(__file__), '../../data/processed')
+    model_dir = os.path.join(os.path.dirname(__file__), '../../models')
     os.makedirs(model_dir, exist_ok=True)
 
     # Load data

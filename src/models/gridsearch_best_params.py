@@ -5,8 +5,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 
 def main():
-    input_dir = "./data/processed"
-    model_dir = "./models"
+    input_dir = os.path.join(os.path.dirname(__file__), '../../data/processed')
+    model_dir = os.path.join(os.path.dirname(__file__), '../../models')
     os.makedirs(model_dir, exist_ok=True)
 
     X_train = pd.read_csv(os.path.join(input_dir, "X_train_scaled.csv"))
