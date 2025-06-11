@@ -1,0 +1,138 @@
+schema: '2.0'
+stages:
+  import_raw_data:
+    cmd: python src/data/import_raw_data.py
+    deps:
+    - path: src/data/import_raw_data.py
+      hash: md5
+      md5: 806dfdb2e78cbdbea5d7b68f88c8d0f1
+      size: 1774
+    outs:
+    - path: data/raw_data/raw.csv
+      hash: md5
+      md5: 617b56af2992376d5c3e91ad80823898
+      size: 333757
+  split_data:
+    cmd: python src/data/split_data.py
+    deps:
+    - path: data/raw_data/raw.csv
+      hash: md5
+      md5: 617b56af2992376d5c3e91ad80823898
+      size: 333757
+    - path: src/data/split_data.py
+      hash: md5
+      md5: 2822c83b602e6802bcdc3542087b9251
+      size: 1062
+    outs:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: d3be1be617366bc81a9254f075039b51
+      size: 78770
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: 38e9f56c92d20ee33257e3918c901e7e
+      size: 183322
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: e064ea83fe860a49b9e9cfab1e8ec5a7
+      size: 9697
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 4f1097f0b9053f0a94904c047541877f
+      size: 22710
+  normalize_data:
+    cmd: python src/data/normalize_data.py
+    deps:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: d3be1be617366bc81a9254f075039b51
+      size: 78770
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: 38e9f56c92d20ee33257e3918c901e7e
+      size: 183322
+    - path: src/data/normalize_data.py
+      hash: md5
+      md5: 666609b828f1f543009d85796e2ccbee
+      size: 927
+    outs:
+    - path: data/processed/X_test_scaled.csv
+      hash: md5
+      md5: 306bd5551feb5a1852b9969b57e740a8
+      size: 85437
+    - path: data/processed/X_train_scaled.csv
+      hash: md5
+      md5: 41c0d8ca5d92b44b00b18db4d7d6db9d
+      size: 198675
+  gridsearch_best_params:
+    cmd: python src/models/gridsearch_best_params.py
+    deps:
+    - path: data/processed/X_train_scaled.csv
+      hash: md5
+      md5: 41c0d8ca5d92b44b00b18db4d7d6db9d
+      size: 198675
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 4f1097f0b9053f0a94904c047541877f
+      size: 22710
+    - path: src/models/gridsearch_best_params.py
+      hash: md5
+      md5: 6fcc66a3c6d0c68a598682e5bae2452a
+      size: 1156
+    outs:
+    - path: models/best_params.pkl
+      hash: md5
+      md5: 25702d8b004356d078dc5f851edb42a5
+      size: 69
+  train_model:
+    cmd: python src/models/train_model.py
+    deps:
+    - path: data/processed/X_train_scaled.csv
+      hash: md5
+      md5: 41c0d8ca5d92b44b00b18db4d7d6db9d
+      size: 198675
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 4f1097f0b9053f0a94904c047541877f
+      size: 22710
+    - path: models/best_params.pkl
+      hash: md5
+      md5: 25702d8b004356d078dc5f851edb42a5
+      size: 69
+    - path: src/models/train_model.py
+      hash: md5
+      md5: b036f4a92b76fe688db379d4db262ff8
+      size: 947
+    outs:
+    - path: models/trained_model.joblib
+      hash: md5
+      md5: 6281cfdcc6c4d5be5af246877ca17e99
+      size: 4436545
+  evaluate_model:
+    cmd: python src/models/evaluate_model.py
+    deps:
+    - path: data/processed/X_test_scaled.csv
+      hash: md5
+      md5: 306bd5551feb5a1852b9969b57e740a8
+      size: 85437
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: e064ea83fe860a49b9e9cfab1e8ec5a7
+      size: 9697
+    - path: models/trained_model.joblib
+      hash: md5
+      md5: 6281cfdcc6c4d5be5af246877ca17e99
+      size: 4436545
+    - path: src/models/evaluate_model.py
+      hash: md5
+      md5: d4ec945fe4cb08f0542147eb7fe16806
+      size: 1183
+    outs:
+    - path: data/predictions.csv
+      hash: md5
+      md5: f88977b0c126cfe4709ef7cee735e9d5
+      size: 10152
+    - path: metrics/scores.json
+      hash: md5
+      md5: 8a67928200fbc36ec53f04222ed144fc
+      size: 64
