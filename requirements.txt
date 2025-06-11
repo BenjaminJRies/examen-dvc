@@ -35,7 +35,7 @@ diskcache==5.6.3
 distro==1.9.0
 dpath==2.2.0
 dulwich==0.22.4
-dvc==3.42.0
+dvc[s3]
 dvc-data==3.8.0
 dvc-http==2.32.0
 dvc-objects==3.0.6
@@ -118,7 +118,6 @@ shtab==1.7.2
 six==1.17.0
 smmap==5.0.2
 sqltrie==0.11.2
--e git+https://github.com/BenjaminJRies/examen-dvc.git@b5aa8789c21a71e6701162da9bcff9873254d556#egg=src
 stack-data==0.6.3
 tabulate==0.9.0
 threadpoolctl==3.5.0
@@ -129,10 +128,11 @@ traitlets==5.14.3
 typer==0.16.0
 typing-extensions==4.13.2
 tzdata==2025.2
-urllib3==2.2.3
+urllib3
 vine==5.1.0
 voluptuous==0.14.2
 wcwidth==0.2.13
 yarl==1.15.2
 zc.lockfile==3.0.post1
 zipp==3.20.2
+-e .
