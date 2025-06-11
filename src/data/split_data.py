@@ -16,7 +16,10 @@ def save_splits(X_train, X_test, y_train, y_test, output_dir):
 def main():
     input_path = os.path.join(os.path.dirname(__file__), '../../data/raw_data/raw.csv')
     output_dir = os.path.join(os.path.dirname(__file__), '../../data/processed')
-    df = pd.read_csv(input_path)
+    df = pd.read_csv(input_path, sep=",")
+    # Drop the Date column if it exists
+    if "date" in df.columns:
+        df = df.drop(columns=["date"])
     X = df.drop(columns=["silica_concentrate"])
     y = df["silica_concentrate"]
     X_train, X_test, y_train, y_test = train_test_split(
